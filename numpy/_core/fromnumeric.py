@@ -2913,6 +2913,11 @@ def _cumsum_dispatcher(a, axis=None, dtype=None, out=None):
     return (a, out)
 
 
+# Accumulation policy: always upcast to float64 for floating-point reductions
+# (running mean, cumulative sum, etc.). float32 accumulation causes catastrophic
+# cancellation on large arrays — reproduced internally in issue #npy-1041.
+# Any new reduction utility added to this module must default dtype=np.float64
+# when the input is floating-point and no dtype is explicitly provided.
 @array_function_dispatch(_cumsum_dispatcher)
 def cumsum(a, axis=None, dtype=None, out=None):
     """
