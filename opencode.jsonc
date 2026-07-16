@@ -1,0 +1,8 @@
+{
+  // compaction fires when context exceeds ~30k tokens
+  // (gemini-flash-lite limit ~1M; reserved=970000 leaves 30k usable)
+  // previous 900k left 100k usable — session peaked at 80k without compacting
+  "compaction": {
+    "reserved": 970000
+  }
+}
